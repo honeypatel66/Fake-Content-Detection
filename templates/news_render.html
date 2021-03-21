@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% block content %}
+<section id="newsArticles">
+    <div class="container">
+        <div class="title">
+            <h3>The news you searched for</h3>
+        </div>
+        <div class="row">
+{% for arts in newss %}
+                    <div class="col-md-6 col-sm-12">
+                        {% if arts.prediction %}
+                        <div class="card border-success text-center bg-success">
+                            <img src={{arts.urlToImage}} class="card-img-top" alt="Image related to news">
+                            <div class="card-body">
+                                <h5 class="card-title">{{arts.title}}</h5>
+                                <p class="card-text">{{arts.description}}</p>
+                                <a href={{arts.url}}>Check Out The article</a>
+                            </div>
+                        </div>
+                        {% else%}
+                        <div class="card border-danger text-center bg-danger">
+                            <img src={{arts.urlToImage}} class="card-img-top" alt="Image related to news">
+                            <div class="card-body">
+                                <h5 class="card-title">{{arts.title}}</h5>
+                                <p class="card-text">{{arts.description}}</p>
+                                <a href={{arts.url}}>Check Out The article</a>
+                            </div>
+                        </div>
+                        {% endif %}
+                    </div>     
+{% endfor %}
+        </div>
+    </div>
+</section>
+{% endblock content%}

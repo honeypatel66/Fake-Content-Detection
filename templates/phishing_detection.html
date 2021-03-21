@@ -1,0 +1,67 @@
+{% extends 'base.html'%}
+
+{% block content %}
+
+<div class="container my-4">
+    <div class="myBox">
+        <div class="d-flex align-items-center justify-content-center" style="height: 350px">
+            <form method="POST" id="PhishForm">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="inputURL">Please enter the URL you want to verify</label>
+                    <input type="text" class="form-control" name="inputURL" required>
+                </div>
+                <div class="form-group">
+                    <button  class="btn btn-primary" type="submit">Check</button>
+                </div>
+            </form>
+            <script type="text/javascript">
+
+                $("#PhishForm").submit(function(e){
+                    e.preventDefault();
+                    $('#modal').css("display","block")
+                    var formData = $(this).serialize()
+                    $.ajax({
+                        type: 'POST',
+                        url : "{% url 'phishing_checker'%}",
+                        data : formData,
+                        success: function(response){
+                            $("#PhishForm").trigger('reset')
+                            $('#modal').css("display","none")
+                            var predict = (response["prediction"]);
+                            if(predict == "Authentic"){
+                                Swal.fire(
+                                    "Not A Phishing Website",
+                                    "The URL is predicted to be non-phishing",
+                                    "success"
+                                )
+                            }
+                            else if(predict == "Phish")
+                            {
+                                Swal.fire(
+                                    "Beware",
+                                    "The URL you entered appears to be phishing, verify before visiting",
+                                    "error"
+                                )
+                            }
+                            else
+                            {
+                                Swal.fire(
+                                    "Doubtful",
+                                    "The URL you entered is not completely trustable",
+                                    "warning"
+                                )
+                            }
+                        },
+                        error: function(response){
+                            alert("Some Error Occured")
+                        }
+                    })
+                })
+
+            </script>
+        </div>
+    </div>
+    <div class="modal" id="modal"></div>
+</div>
+{% endblock content %}

@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+{% block content %}
+<script>
+    window.onload = function () {
+        var today = new Date();
+        var minm = new Date();
+        var dd = today.getDate();
+        var mm = today.getMonth() + 1; //January is 0!
+        var mm1 = minm.getMonth() + 1;
+        var yyyy = today.getFullYear();
+        if (dd < 10) {
+            dd = '0' + dd
+        }
+        if (mm < 10) {
+            mm = '0' + mm
+        }
+        mm1 = mm1  - 1
+        if(mm1 == 0){
+            mm1 =12
+        }
+        if (mm1 < 10) {
+            mm1 = '0' + mm1
+        }
+        today = yyyy + '-' + mm + '-' + dd;
+        minm = yyyy+ '-' + mm1 + '-' + dd;
+        console.log(today)
+        console.log(minm)
+        document.getElementById("datefield").setAttribute("max", today);
+        document.getElementById("datefield").setAttribute("min", minm);
+    }
+</script>
+
+<div class="container my-4">
+    <div class="myBox">
+        <div class="d-flex align-items-center justify-content-center" style="height: 350px">
+            <form method="POST" action="news_search">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="date">Date</label>
+                    <input id="datefield" type="date" min="2021-02-13" max="2022-02-15" name="inpDate" placeholder="Enter date" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="newsKeyword">Keywords</label>
+                    <input type="text" class="form-control" name="newsKeyword" placeholder="Enter news keyword" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock content%}

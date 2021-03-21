@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+
+{% block content%}
+
+<div class="container my-4">
+    <div class="myBox">
+        <div class="d-flex align-items-center justify-content-center" style="height: 350px">
+            <form method="POST" id="VerifyForm">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="newsPastingArea">Please paste the news you want to verify</label>
+                    <textarea class="form-control" name="newsPastingArea" rows="3" required></textarea>
+                </div>
+                <div class="form-group">
+                    <button  class="btn btn-primary" type="submit">Check</button>
+                </div>
+            </form>
+            <script type="text/javascript">
+
+                $("#VerifyForm").submit(function(e){
+                    e.preventDefault();
+                    var formData = $(this).serialize();
+                    $.ajax({
+                        type: 'POST',
+                        url : "{% url 'news_checker'%}",
+                        data : formData,
+                        success: function(response){
+                            $("#VerifyForm").trigger('reset')
+                            var predict = (response["prediction"]);
+                            if(predict == "true"){
+                                Swal.fire(
+                                    "Original",
+                                    "The piece of news is predicted to be original",
+                                    "success"
+                                )
+                            }
+                            else
+                            {
+                                Swal.fire(
+                                    "Beware",
+                                    "The news you entered appears to be fake, verify before trusting",
+                                    "error"
+                                )
+                            }
+                        },
+                        error: function(response){
+                            alert("Some Error Occured")
+                        }
+                    })
+                })
+            </script>
+        </div>
+    </div>
+</div>
+
+{% endblock content%}
