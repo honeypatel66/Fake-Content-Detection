@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse,JsonResponse
 from django.core import serializers
+from django.conf import settings
 import json
 import requests
 from .models import Articles
@@ -19,6 +20,7 @@ import time
 from dateutil.parser import parse as date_parse
 import numpy as np
 import pickle
+import os
 # Create your views here.
 
 def index(request):
@@ -39,14 +41,12 @@ def news_search(request):
 
         resp = requests.get(query)
 
-        print (resp)
 
         resp = resp.json()
-
-        pkl_filename = "pickle_model.pkl"
+       
+        path = os.path.join(settings.BASE_DIR,"FakeDetector/DecisionTree_model.pkl")
         
-        
-        with open("/home/notpreet/Documents/PMMS/MyProject/FakeDetector/pickle_model.pkl",'rb') as file:
+        with open(path,'rb') as file:
             pickle_model = pickle.load(file)
         
         myObj = []
@@ -94,10 +94,10 @@ def news_checker(request):
     if request.method == "POST":
         newsText = request.POST.get('newsPastingArea',False)
 
-        pkl_filename = "pickle_model.pkl"
-        
-        
-        with open("/home/notpreet/Documents/PMMS/MyProject/FakeDetector/pickle_model.pkl",'rb') as file:
+        path = os.path.join(settings.BASE_DIR,"FakeDetector/DecisionTree_model.pkl")
+      
+        with open(path,'rb') as file:
+            
             pickle_model = pickle.load(file)
 
         pre = pickle_model.predict([newsText])
@@ -108,7 +108,6 @@ def news_checker(request):
             pre = "true"
         
         dict  = {"prediction":pre}
-        print (dict)
         return JsonResponse(dict,status = 200)
 
 def phishing_detection(request):
@@ -675,7 +674,7 @@ def phishing_checker(request):
         array = np.array(new_input)
         array.reshape(-1,1)
 
-        pkl_filename = "/home/notpreet/Documents/PMMS/MyProject/FakeDetector/random_forest_model.pkl"
+        pkl_filename = os.path.join(settings.BASE_DIR,"FakeDetector/random_forest_model.pkl")
         with open(pkl_filename,'rb') as file:
             pickle_model = pickle.load(file)
 

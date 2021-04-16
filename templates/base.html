@@ -50,7 +50,6 @@
                 no-repeat;
   }
 
-
   body.loading .modal {
       overflow: hidden;   
   }
@@ -64,24 +63,24 @@
 </head>
 <body>
   <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
-    <div class="container-fluid">
+    <div class="container">
       <a class="navbar-brand" href="/">Fake Detector</a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarText">
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <ul class="navbar-nav ml-auto">
           <li class="nav-item">
-            <a class="nav-link" aria-current="page" href="/">Home</a>
+            <a class="nav-link {% if request.path == '/' %} active {% endif %} " aria-current="page" href="/">Home</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="/news">News Search</a>
+            <a class="nav-link {% if request.path == '/news/' %} active {% endif %} {% if request.path == '/news/news_search' %} active {% endif %}" href="/news">News Search</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="/verify_news">Verify News</a>
+            <a class="nav-link {% if request.path == '/verify_news' %} active {% endif %}" href="/verify_news">Verify News</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="/phishing_detection">Phishing Website Detection</a>
+            <a class="nav-link {% if request.path == '/phishing_detection' %} active {% endif %}" href="/phishing_detection">Phishing Website Detection</a>
           </li>
         </ul>
       </div>

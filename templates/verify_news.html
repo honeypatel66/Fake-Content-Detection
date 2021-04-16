@@ -25,14 +25,15 @@
                         url : "{% url 'news_checker'%}",
                         data : formData,
                         success: function(response){
-                            $("#VerifyForm").trigger('reset')
                             var predict = (response["prediction"]);
                             if(predict == "true"){
                                 Swal.fire(
                                     "Original",
                                     "The piece of news is predicted to be original",
                                     "success"
-                                )
+                                ).then(function(){
+                                    $("#VerifyForm").trigger('reset')
+                                })
                             }
                             else
                             {
@@ -40,7 +41,9 @@
                                     "Beware",
                                     "The news you entered appears to be fake, verify before trusting",
                                     "error"
-                                )
+                                ).then(function(){
+                                    $("#VerifyForm").trigger('reset')
+                                })
                             }
                         },
                         error: function(response){

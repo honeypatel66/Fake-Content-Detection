@@ -26,7 +26,6 @@
                         url : "{% url 'phishing_checker'%}",
                         data : formData,
                         success: function(response){
-                            $("#PhishForm").trigger('reset')
                             $('#modal').css("display","none")
                             var predict = (response["prediction"]);
                             if(predict == "Authentic"){
@@ -34,7 +33,9 @@
                                     "Not A Phishing Website",
                                     "The URL is predicted to be non-phishing",
                                     "success"
-                                )
+                                ).then(function(){
+                                    $("#PhishForm").trigger('reset')
+                                })
                             }
                             else if(predict == "Phish")
                             {
@@ -42,7 +43,9 @@
                                     "Beware",
                                     "The URL you entered appears to be phishing, verify before visiting",
                                     "error"
-                                )
+                                ).then(function(){
+                                    $("#PhishForm").trigger('reset')
+                                })
                             }
                             else
                             {
@@ -50,7 +53,9 @@
                                     "Doubtful",
                                     "The URL you entered is not completely trustable",
                                     "warning"
-                                )
+                                ).then(function(){
+                                    $("#PhishForm").trigger('reset')
+                                })
                             }
                         },
                         error: function(response){
