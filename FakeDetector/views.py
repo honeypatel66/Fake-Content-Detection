@@ -5,13 +5,11 @@ from django.conf import settings
 import json
 import requests
 from .models import Articles
-import pickle
 import ipaddress
 import re
 import urllib.request
 from bs4 import BeautifulSoup
 import socket
-import requests
 from googlesearch import search
 import whois
 from datetime import datetime
