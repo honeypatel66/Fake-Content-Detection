@@ -59,6 +59,8 @@
                             }
                         },
                         error: function(response){
+                            $('#modal').css("display","none")
+                            $("#PhishForm").trigger('reset')
                             alert("Some Error Occured")
                         }
                     })
