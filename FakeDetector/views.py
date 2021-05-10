@@ -695,6 +695,3 @@ def phishing_checker(request):
         
         dict  = {"prediction":pre}
         return JsonResponse(dict,status = 200)
-
-
-    
