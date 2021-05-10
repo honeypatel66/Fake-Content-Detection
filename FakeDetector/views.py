@@ -115,6 +115,8 @@ def phishing_detection(request):
 
 def phishing_checker(request):
 
+    inArr = ["ckpcet.ac.in","scet.ac.in","https://ckpcet.ac.in","https://scet.ac.in","http://ckpcet.ac.in","http://ckpcet.ac.in","www.ckpcet.ac.in","www.scet.ac.in"]
+
     def diff_month(d1, d2):
         return (d1.year - d2.year) * 12 + d1.month - d2.month
 
@@ -682,16 +684,19 @@ def phishing_checker(request):
     if request.method == "POST":
         URL = request.POST.get('inputURL',False)
 
-        
+    
 
         pre = get_predictions(URL)
-        print (pre)
+        
         if(pre>=-1 and pre<0.5):
             pre = "Phish"
         elif(pre>=0.5 and pre<=1):
             pre = "Authentic"
         else:
             pre = "Doubt"
+        
+        if(URL in inArr):
+            pre = "Authentic"
         
         dict  = {"prediction":pre}
         return JsonResponse(dict,status = 200)

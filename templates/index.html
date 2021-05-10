@@ -58,15 +58,17 @@
         }
 
         .description_wrapper {
+            font-size: 25px;
             grid-area: desc;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-
+            background: linear-gradient(#2c3e50,#fd746c );
         }
 
         .phish_wrapper {
+            font-size: 25px;
             display: flex;
             align-items: center;
             flex-direction: column;
@@ -74,11 +76,11 @@
             grid-area: phish;
             background-repeat: no-repeat;
             background-size: cover;
-
             background-image: url({% static 'images/phish2.png' %});
         }
 
         .news_wrapper {
+            font-size: 25px;
             display: flex;
             grid-area: news;
             flex-direction: column;
@@ -114,7 +116,7 @@
             </div>
             <div class="options_phish" style="display: none;">
                 <a href="/phishing_detection">
-                    <button class="btn btn-dark">Verify A Phish</button>
+                    <button class="btn btn-danger">Verify A Phish</button>
                 </a>
             </div>
         </div>
@@ -124,11 +126,11 @@
             </div>
             <div class="options_news" style="display: none;">
                 <a href="/news/">
-                    <button class="btn btn-dark">Check News</button>
+                    <button class="btn btn-danger">Check News</button>
                 </a>
                 <br>
                 <a href="/verify_news">
-                    <button class="btn btn-dark">Verify News</button>
+                    <button class="btn btn-danger">Verify News</button>
                 </a>
             </div>
         </div>
